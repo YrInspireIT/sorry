@@ -4,65 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Session Verification - Your Inspire IT</title>
-    <!-- এখানে আপনার মূল CSS ফাইল লিঙ্ক করুন (যদি থাকে) -->
-    <!-- <link rel="stylesheet" href="style.css"> -->
-
-    <!-- অথবা, নিচে দেওয়া স্টাইল ব্যবহার করুন -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         /* আপনার সাইটের সাথে সামঞ্জস্যপূর্ণ ভেরিয়েবলস */
         :root {
-            --primary-bg: #eff3ff;
+            --primary-bg: #f4f7fe; /* হালকা নীল ব্যাকগ্রাউন্ড */
             --secondary-bg: #ffffff;
-            --text-dark: #1e293b;
-            --text-light: #475569;
-            --accent-color: #4f46e5;
+            --text-dark: #1e293b; /* গাঢ় টেক্সট */
+            --text-medium: #475569; /* মাঝারি টেক্সট */
+            --text-light: #64748b; /* হালকা টেক্সট */
+            --accent-color: #4f46e5; /* প্রধান অ্যাকসেন্ট রঙ */
             --accent-hover: #4338ca;
             --border-color: #e2e8f0;
-            --shadow-color: rgba(0, 0, 0, 0.08);
+            --shadow-color: rgba(79, 70, 229, 0.1); /* অ্যাকসেন্ট রঙের হালকা শ্যাডো */
             --warning-color: #f59e0b; /* Sign out button */
             --warning-hover: #d97706;
+            --success-color: #10b981; /* সাফল্যের জন্য */
+            --icon-color: var(--accent-color);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Hind Siliguri', 'Poppins', sans-serif; /* বাংলা ফন্ট আগে */
             background-color: var(--primary-bg);
             color: var(--text-dark);
-            line-height: 1.6;
+            line-height: 1.7; /* লাইন স্পেসিং বাড়ানো হলো */
             font-size: 16px;
             display: flex;
-            justify-content: center;
+            flex-direction: column; /* কন্টেন্ট উল্লম্বভাবে সাজানো */
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 30px 15px; /* প্যাডিং */
         }
 
-        .sl-container {
+        /* কন্টেইনার স্টাইল */
+        .content-wrapper {
+            width: 100%;
+            max-width: 800px; /* কন্টেইনার চওড়া করা হলো */
+            display: flex;
+            flex-direction: column;
+            gap: 35px; /* সেকশনগুলোর মধ্যে ফাঁক */
+        }
+
+        .sl-container, .info-section {
             background-color: var(--secondary-bg);
             padding: 35px 40px;
-            border-radius: 10px;
-            box-shadow: 0 8px 25px var(--shadow-color);
-            max-width: 500px;
+            border-radius: 12px; /* আরও গোলাকার */
+            box-shadow: 0 10px 30px var(--shadow-color);
             width: 100%;
             text-align: center;
+            border: 1px solid var(--border-color);
             animation: fadeInScaleUp 0.6s ease-out forwards;
+            opacity: 0; /* অ্যানিমেশনের জন্য শুরুতে অদৃশ্য */
+        }
+        .info-section {
+             animation-delay: 0.2s; /* পরের সেকশনগুলো একটু দেরিতে আসবে */
+             text-align: left; /* তথ্য সেকশনের লেখা বাম দিক থেকে */
         }
 
         .sl-container h1 {
-            font-size: 1.7rem;
+            font-size: 1.8rem; /* বড় শিরোনাম */
             font-weight: 600;
             color: var(--text-dark);
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .sl-container h1 .icon { /* আইকন স্টাইল */
+            color: var(--accent-color);
+            font-size: 1.6rem;
         }
 
         .sl-container p {
-            color: var(--text-light);
+            color: var(--text-medium);
             margin-bottom: 12px;
-            font-size: 1rem;
+            font-size: 1.05rem; /* সামান্য বড় ফন্ট */
         }
          .sl-container p.security-note {
             font-size: 0.95rem;
@@ -70,30 +94,52 @@
             margin-bottom: 25px;
             border-top: 1px solid var(--border-color);
             padding-top: 15px;
-            margin-top: 15px;
+            margin-top: 20px;
+            background-color: #f8fafc; /* হালকা ব্যাকগ্রাউন্ড */
+            padding: 15px;
+            border-radius: 6px;
+            text-align: left;
+         }
+         #loggedInUserName {
+            font-weight: 600;
+            color: var(--accent-color);
          }
 
         .sl-actions {
             display: flex;
             justify-content: center;
-            gap: 15px; /* স্পেস */
+            gap: 20px; /* স্পেস বাড়ানো হলো */
             margin-top: 30px;
+            flex-wrap: wrap; /* ছোট স্ক্রিনে বাটন নিচে নামবে */
         }
 
         .btn {
-            display: inline-block;
+            display: inline-flex; /* আইকন ও টেক্সট অ্যালাইনমেন্টের জন্য */
+            align-items: center;
+            justify-content: center;
+            gap: 8px; /* আইকন ও টেক্সটের মধ্যে ফাঁক */
             color: #fff;
-            padding: 10px 25px;
-            border-radius: 6px;
+            padding: 12px 30px; /* প্যাডিং বাড়ানো হলো */
+            border-radius: 8px; /* আরও গোলাকার */
             font-weight: 500;
             font-size: 1rem;
-            transition: background-color 0.3s ease, transform 0.2s ease;
+            transition: all 0.3s ease; /* মসৃণ ট্রানজিশন */
             border: none;
             cursor: pointer;
             text-align: center;
-            min-width: 120px; /* বাটনের নূন্যতম প্রস্থ */
+            min-width: 150px; /* বাটনের নূন্যতম প্রস্থ */
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
-        .btn:hover { transform: translateY(-2px); }
+        .btn i { font-size: 1.1em; } /* আইকন সাইজ */
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.03); /* হালকা উপরে উঠবে এবং বড় হবে */
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+        .btn:active {
+             transform: translateY(-1px) scale(0.98); /* ক্লিক ইফেক্ট */
+             box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
 
         .btn-continue { background-color: var(--accent-color); }
         .btn-continue:hover { background-color: var(--accent-hover); }
@@ -101,39 +147,207 @@
         .btn-signout { background-color: var(--warning-color); }
         .btn-signout:hover { background-color: var(--warning-hover); }
 
-        /* অ্যানিমেশন */
-        @keyframes fadeInScaleUp {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
+        /* তথ্য সেকশনের স্টাইল */
+        .info-section h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            display: inline-block; /* শুধুমাত্র টেক্সটের নিচে বর্ডার */
         }
 
+        /* বেনিফিট ও সার্ভিস লিস্ট স্টাইল */
+        .benefit-list, .service-list {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 20px;
+        }
+        .benefit-list li, .service-list li {
+            display: flex;
+            align-items: flex-start; /* আইকন ও টেক্সট উপরে অ্যালাইন */
+            gap: 12px;
+            margin-bottom: 15px;
+            font-size: 1rem;
+            color: var(--text-medium);
+            transition: color 0.3s ease;
+        }
+        .benefit-list li i, .service-list li i {
+            color: var(--icon-color);
+            font-size: 1.2rem;
+            margin-top: 3px; /* টেক্সটের সাথে আইকন অ্যালাইনমেন্ট */
+            width: 20px; /* আইকনের জন্য নির্দিষ্ট জায়গা */
+            text-align: center;
+            flex-shrink: 0; /* আইকন যেন ছোট না হয়ে যায় */
+        }
+         .benefit-list li:hover, .service-list li:hover {
+             color: var(--text-dark); /* হোভারে টেক্সট গাঢ় হবে */
+         }
+
+        /* FAQ সেকশন স্টাইল */
+        .faq-item {
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+        }
+        .faq-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0;}
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 1.1rem; /* প্রশ্ন একটু বড় */
+            color: var(--text-dark);
+            transition: color 0.3s ease;
+        }
+        .faq-question:hover { color: var(--accent-color); }
+        .faq-question i { transition: transform 0.3s ease; } /* আইকন ঘোরার অ্যানিমেশন */
+        .faq-question.active i { transform: rotate(180deg); } /* অ্যাক্টিভ হলে আইকন ঘুরবে */
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out; /* মসৃণ খোলা/বন্ধ */
+            color: var(--text-medium);
+            font-size: 0.95rem;
+            padding-left: 10px; /* উত্তর একটু ভেতরে */
+        }
+        .faq-answer p { margin-top: 10px; margin-bottom: 0; }
+        .faq-answer.active {
+            max-height: 300px; /* যথেষ্ট বড় মান */
+            padding-top: 10px;
+            padding-bottom: 5px;
+        }
+
+
+        /* অ্যানিমেশন */
+        @keyframes fadeInScaleUp {
+            from { opacity: 0; transform: scale(0.95) translateY(10px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes iconBounce { /* আইকন অ্যানিমেশন */
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        .sl-container h1 .icon { animation: iconBounce 1.5s ease-in-out infinite; }
+
         /* Responsive */
+        @media (max-width: 768px) {
+            .content-wrapper { max-width: 95%; }
+            .sl-container, .info-section { padding: 25px 20px; }
+            .sl-container h1 { font-size: 1.6rem; }
+            .sl-container p { font-size: 1rem; }
+            .info-section h2 { font-size: 1.3rem; }
+            .benefit-list li, .service-list li { font-size: 0.95rem; gap: 10px; }
+            .faq-question { font-size: 1rem; }
+        }
+
         @media (max-width: 576px) {
-            .sl-container { padding: 25px 20px; }
-            .sl-container h1 { font-size: 1.5rem; }
-            .sl-container p { font-size: 0.95rem; }
-             .sl-actions { flex-direction: column; gap: 10px; }
+             .sl-actions { flex-direction: column; gap: 12px; }
              .btn { width: 100%; } /* বাটন ফুল উইডথ */
+             .sl-container h1 { font-size: 1.5rem; }
+             .sl-container p { font-size: 0.95rem; }
         }
 
     </style>
 </head>
 <body>
 
-    <div class="sl-container">
-        <h1>Session Verification</h1>
-        <p>You are currently logged in as: <strong id="loggedInUserName">User</strong></p>
-        <p class="security-note">
-            আপনার অ্যাকাউন্ট সুরক্ষিত রাখতে এবং সেশন যাচাই করার জন্য আপনাকে এখানে আনা হয়েছে।
-            <br>(For security purposes and to verify your session, you've been directed here.)
-        </p>
-        <p>আপনি কি চালিয়ে যেতে চান নাকি সাইন আউট করতে চান?</p>
+    <div class="content-wrapper">
 
-        <div class="sl-actions">
-            <button class="btn btn-continue" onclick="continueSession()">Continue</button>
-            <button class="btn btn-signout" onclick="signOut()">Sign Out</button>
+        <!-- Session Verification Box -->
+        <div class="sl-container">
+            <h1><i class="fas fa-shield-alt icon"></i> Session Verification</h1>
+            <p>আপনি বর্তমানে এই নামে লগইন আছেন: <strong id="loggedInUserName">ব্যবহারকারী</strong></p>
+            <p class="security-note">
+                আপনার অ্যাকাউন্ট সুরক্ষিত রাখতে এবং আপনার বর্তমান সেশন যাচাই করার জন্য আপনাকে এই পৃষ্ঠায় আনা হয়েছে।
+                <br>(For security purposes and to verify your current session, you've been directed to this page.)
+            </p>
+            <p>আপনি কি আপনার কাজ চালিয়ে যেতে চান নাকি অ্যাকাউন্ট থেকে সাইন আউট করতে চান?</p>
+
+            <div class="sl-actions">
+                <button class="btn btn-continue" onclick="continueSession()">
+                    <i class="fas fa-arrow-right"></i> Continue
+                </button>
+                <button class="btn btn-signout" onclick="signOut()">
+                    <i class="fas fa-sign-out-alt"></i> Sign Out
+                </button>
+            </div>
         </div>
-    </div>
+
+        <!-- Benefits Section -->
+        <div class="info-section" id="benefits-section">
+             <h2><i class="fas fa-star" style="color: var(--success-color); margin-right: 8px;"></i> সক্রিয় অ্যাকাউন্টের সুবিধা</h2>
+             <ul class="benefit-list">
+                 <li><i class="fas fa-check-circle"></i> আপনার ডেডিকেটেড ড্যাশবোর্ডে নিরবিচ্ছিন্ন অ্যাক্সেস। (Seamless access to your dedicated dashboard.)</li>
+                 <li><i class="fas fa-lock"></i> উন্নত নিরাপত্তা এবং সেশন ট্র্যাকিং। (Enhanced security and session tracking.)</li>
+                 <li><i class="fas fa-cogs"></i> ব্যক্তিগতকৃত সেটিংস ও অভিজ্ঞতার সুযোগ। (Opportunity for personalized settings and experience.)</li>
+                 <li><i class="fas fa-headset"></i> অগ্রাধিকার ভিত্তিতে সাপোর্ট এবং সহায়তা। (Priority support and assistance.)</li>
+                 <li><i class="fas fa-bell"></i> নতুন ফিচার এবং আপডেটের নোটিফিকেশন। (Notifications for new features and updates.)</li>
+             </ul>
+        </div>
+
+        <!-- Services Section -->
+        <div class="info-section" id="services-section">
+            <h2><i class="fas fa-briefcase" style="color: var(--accent-color); margin-right: 8px;"></i> আমাদের সেবাসমূহ</h2>
+            <ul class="service-list">
+                <li><i class="fas fa-code"></i> কাস্টম ওয়েব ডেভেলপমেন্ট এবং ডিজাইন। (Custom Web Development & Design)</li>
+                <li><i class="fas fa-bullhorn"></i> ডিজিটাল মার্কেটিং এবং এসইও সেবা। (Digital Marketing & SEO Services)</li>
+                <li><i class="fas fa-server"></i> নির্ভরযোগ্য ওয়েব হোস্টিং এবং ডোমেইন। (Reliable Web Hosting & Domain)</li>
+                <li><i class="fas fa-mobile-alt"></i> মোবাইল অ্যাপ ডেভেলপমেন্ট (অ্যান্ড্রয়েড ও আইওএস)। (Mobile App Development - Android & iOS)</li>
+                <li><i class="fas fa-shield-alt"></i> সাইবার সিকিউরিটি এবং ডেটা সুরক্ষা। (Cyber Security & Data Protection)</li>
+                <li><i class="fas fa-chalkboard-teacher"></i> আইটি প্রশিক্ষণ এবং কনসালটেন্সি। (IT Training & Consultancy)</li>
+            </ul>
+        </div>
+
+        <!-- FAQ Section -->
+        <div class="info-section" id="faq-section">
+            <h2><i class="fas fa-question-circle" style="color: var(--warning-color); margin-right: 8px;"></i> সাধারণ জিজ্ঞাস্য (FAQ)</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>আমাকে কেন এই পেজে আনা হয়েছে? (Why am I here?)</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>নিরাপত্তার জন্য এবং আপনার লগইন সেশনটি সক্রিয় ও বৈধ কিনা তা নিশ্চিত করার জন্য আপনাকে এখানে আনা হয়েছে। এটি আপনার অ্যাকাউন্ট সুরক্ষিত রাখতে সাহায্য করে। <br>(You are here for security reasons and to confirm that your login session is active and valid. This helps protect your account.)</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>'Continue' ক্লিক করলে কী হবে? (What happens if I click 'Continue'?)</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>আপনি আপনার অ্যাকাউন্টের ড্যাশবোর্ডে বা আপনি পূর্বে যে পেজে ছিলেন সেখানে ফিরে যাবেন এবং স্বাভাবিকভাবে কাজ চালিয়ে যেতে পারবেন। <br>(You will be redirected back to your account dashboard or the page you were previously on, allowing you to continue your work normally.)</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>'Sign Out' ক্লিক করলে কী হবে? (What happens if I click 'Sign Out'?)</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>আপনার বর্তমান সেশনটি বন্ধ হয়ে যাবে এবং আপনাকে লগইন পেজে ফেরত পাঠানো হবে। পুনরায় অ্যাক্সেস করতে আপনাকে আবার লগইন করতে হবে। <br>(Your current session will be terminated, and you will be redirected to the login page. You will need to log in again to regain access.)</p>
+                    </div>
+                </div>
+                 <div class="faq-item">
+                    <div class="faq-question">
+                        <span>যদি আমি এই লগইন সেশনটি চিনতে না পারি? (What if I don't recognize this login session?)</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>যদি আপনার সন্দেহ হয় যে অন্য কেউ আপনার অ্যাকাউন্ট ব্যবহার করছে, অবিলম্বে 'Sign Out' ক্লিক করুন এবং আপনার পাসওয়ার্ড পরিবর্তন করুন। প্রয়োজনে আমাদের সাপোর্টে যোগাযোগ করুন। <br>(If you suspect someone else might be using your account, click 'Sign Out' immediately and change your password. Contact our support if necessary.)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div> <!-- End of content-wrapper -->
+
 
     <script>
         // --- কুকি ফাংশন (আগের মতই) ---
@@ -143,14 +357,15 @@
             for(let i = 0; i < ca.length; i++) {
                 let c = ca[i];
                 while (c.charAt(0) == ' ') c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+                if (c.indexOf(nameEQ) == 0) return decodeURIComponent(c.substring(nameEQ.length, c.length)); // Decode URI Component
             }
             return null;
         }
 
         function deleteCookie(name) {
             // path=/ নিশ্চিত করে যেন সঠিক কুকি ডিলিট হয়
-            document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            // secure; samesite=lax অ্যাট্রিবিউট যোগ করা যেতে পারে নিরাপত্তার জন্য
+            document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT; secure; samesite=lax';
             console.log("Cookie deleted:", name);
         }
 
@@ -161,11 +376,14 @@
 
             if (!loggedInUser) {
                 // যদি কুকি না থাকে, ব্যবহারকারীকে লগইন পেজে পাঠান
-                console.log("No active session found on sl.html. Redirecting to login.");
-                window.location.href = 'https://YrInspireIT.github.io/'; // আপনার লগইন পেজের নাম
+                console.log("No active session found on verification page. Redirecting to login.");
+                // window.location.href = 'auth.html'; // আপনার লগইন পেজের URL
+                 window.location.href = 'https://YrInspireIT.github.io/'; // ফলব্যাক লগইন পেজ
             } else {
                 // যদি কুকি থাকে, ইউজারের নাম দেখান
-                document.getElementById('loggedInUserName').textContent = loggedInUser;
+                // Sanitize the username display slightly (optional but good practice)
+                const userNameElement = document.getElementById('loggedInUserName');
+                userNameElement.textContent = loggedInUser.replace(/</g, "<").replace(/>/g, ">"); // Basic XSS prevention
                 console.log(`Session verification page loaded for user: ${loggedInUser}`);
             }
         };
@@ -174,16 +392,65 @@
         function continueSession() {
             // ব্যবহারকারীকে ড্যাশবোর্ড বা মূল লগইন করা পেজে পাঠান
             console.log("Continuing session...");
-            window.location.href = 'https://pay-yourinspireit.github.io/active-account/v2'; // আপনার ড্যাশবোর্ডের বা প্রধান পেজের নাম
+            window.location.href = 'https://pay-yourinspireit.github.io/active-account/v2'; // আপনার ড্যাশবোর্ডের URL
         }
 
         function signOut() {
             // কুকি ডিলিট করুন এবং লগইন পেজে পাঠান
             console.log("Signing out...");
-            deleteCookie('loggedInUser');
-            window.location.href = 'https://YrInspireIT.github.io/'; // আপনার লগইন পেজের নাম
+            const loginCookieName = 'loggedInUser';
+            deleteCookie(loginCookieName);
+            // নিশ্চিত করুন কুকি সত্যিই ডিলিট হয়েছে (ঐচ্ছিক চেক)
+             setTimeout(() => {
+                if (!getCookie(loginCookieName)) {
+                    console.log("Cookie successfully deleted.");
+                } else {
+                    console.warn("Cookie might not have been deleted properly.");
+                }
+                window.location.href = 'https://YrInspireIT.github.io/'; // আপনার লগইন পেজের URL
+             }, 100); // সামান্য ডিলে দিন কুকি ডিলিট প্রসেস হওয়ার জন্য
         }
+
+        // --- FAQ Accordion Logic ---
+        const faqQuestions = document.querySelectorAll('.faq-question');
+
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.nextElementSibling;
+                const icon = question.querySelector('i');
+                const isActive = question.classList.contains('active');
+
+                // Close all other answers (optional, uncomment if needed)
+                // faqQuestions.forEach(q => {
+                //     if (q !== question) {
+                //         q.classList.remove('active');
+                //         q.nextElementSibling.classList.remove('active');
+                //         q.nextElementSibling.style.maxHeight = null;
+                //         q.nextElementSibling.style.paddingTop = null;
+                //         q.nextElementSibling.style.paddingBottom = null;
+                //         q.querySelector('i').classList.remove('active');
+                //     }
+                // });
+
+                question.classList.toggle('active');
+                icon.classList.toggle('active'); // For rotation
+                answer.classList.toggle('active');
+
+                if (answer.classList.contains('active')) {
+                    // Set max-height to the scroll height for smooth opening
+                    answer.style.maxHeight = answer.scrollHeight + "px";
+                    answer.style.paddingTop = '10px'; // Add padding when open
+                    answer.style.paddingBottom = '5px';
+                } else {
+                    // Remove max-height for smooth closing
+                    answer.style.maxHeight = null;
+                    answer.style.paddingTop = null;
+                    answer.style.paddingBottom = null;
+                }
+            });
+        });
+
     </script>
 
 </body>
-</html>
+                    </html>
