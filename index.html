@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="bn"> <!-- ভাষা বাংলা সেট করা হলো -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Session Verification - Your Inspire IT</title>
+    <!-- এখানে আপনার মূল CSS ফাইল লিঙ্ক করুন (যদি থাকে) -->
+    <!-- <link rel="stylesheet" href="style.css"> -->
+
+    <!-- অথবা, নিচে দেওয়া স্টাইল ব্যবহার করুন -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* আপনার সাইটের সাথে সামঞ্জস্যপূর্ণ ভেরিয়েবলস */
+        :root {
+            --primary-bg: #eff3ff;
+            --secondary-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-light: #475569;
+            --accent-color: #4f46e5;
+            --accent-hover: #4338ca;
+            --border-color: #e2e8f0;
+            --shadow-color: rgba(0, 0, 0, 0.08);
+            --warning-color: #f59e0b; /* Sign out button */
+            --warning-hover: #d97706;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .sl-container {
+            background-color: var(--secondary-bg);
+            padding: 35px 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px var(--shadow-color);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            animation: fadeInScaleUp 0.6s ease-out forwards;
+        }
+
+        .sl-container h1 {
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+        }
+
+        .sl-container p {
+            color: var(--text-light);
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+         .sl-container p.security-note {
+            font-size: 0.95rem;
+            color: var(--text-light); /* Slightly dimmer */
+            margin-bottom: 25px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+            margin-top: 15px;
+         }
+
+        .sl-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px; /* স্পেস */
+            margin-top: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            color: #fff;
+            padding: 10px 25px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            border: none;
+            cursor: pointer;
+            text-align: center;
+            min-width: 120px; /* বাটনের নূন্যতম প্রস্থ */
+        }
+        .btn:hover { transform: translateY(-2px); }
+
+        .btn-continue { background-color: var(--accent-color); }
+        .btn-continue:hover { background-color: var(--accent-hover); }
+
+        .btn-signout { background-color: var(--warning-color); }
+        .btn-signout:hover { background-color: var(--warning-hover); }
+
+        /* অ্যানিমেশন */
+        @keyframes fadeInScaleUp {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Responsive */
+        @media (max-width: 576px) {
+            .sl-container { padding: 25px 20px; }
+            .sl-container h1 { font-size: 1.5rem; }
+            .sl-container p { font-size: 0.95rem; }
+             .sl-actions { flex-direction: column; gap: 10px; }
+             .btn { width: 100%; } /* বাটন ফুল উইডথ */
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="sl-container">
+        <h1>Session Verification</h1>
+        <p>You are currently logged in as: <strong id="loggedInUserName">User</strong></p>
+        <p class="security-note">
+            আপনার অ্যাকাউন্ট সুরক্ষিত রাখতে এবং সেশন যাচাই করার জন্য আপনাকে এখানে আনা হয়েছে।
+            <br>(For security purposes and to verify your session, you've been directed here.)
+        </p>
+        <p>আপনি কি চালিয়ে যেতে চান নাকি সাইন আউট করতে চান?</p>
+
+        <div class="sl-actions">
+            <button class="btn btn-continue" onclick="continueSession()">Continue</button>
+            <button class="btn btn-signout" onclick="signOut()">Sign Out</button>
+        </div>
+    </div>
+
+    <script>
+        // --- কুকি ফাংশন (আগের মতই) ---
+        function getCookie(name) {
+            const nameEQ = name + "=";
+            const ca = document.cookie.split(';');
+            for(let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+        function deleteCookie(name) {
+            // path=/ নিশ্চিত করে যেন সঠিক কুকি ডিলিট হয়
+            document.cookie = name + '=; Path=/; Expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+            console.log("Cookie deleted:", name);
+        }
+
+        // --- পেজ লোড হওয়ার সময় চেক ---
+        window.onload = function() {
+            const loginCookieName = 'loggedInUser'; // লগইন কুকির নাম
+            const loggedInUser = getCookie(loginCookieName);
+
+            if (!loggedInUser) {
+                // যদি কুকি না থাকে, ব্যবহারকারীকে লগইন পেজে পাঠান
+                console.log("No active session found on sl.html. Redirecting to login.");
+                window.location.href = 'https://YrInspireIT.github.io/'; // আপনার লগইন পেজের নাম
+            } else {
+                // যদি কুকি থাকে, ইউজারের নাম দেখান
+                document.getElementById('loggedInUserName').textContent = loggedInUser;
+                console.log(`Session verification page loaded for user: ${loggedInUser}`);
+            }
+        };
+
+        // --- বাটন অ্যাকশন ---
+        function continueSession() {
+            // ব্যবহারকারীকে ড্যাশবোর্ড বা মূল লগইন করা পেজে পাঠান
+            console.log("Continuing session...");
+            window.location.href = 'https://pay-yourinspireit.github.io/active-account/v2'; // আপনার ড্যাশবোর্ডের বা প্রধান পেজের নাম
+        }
+
+        function signOut() {
+            // কুকি ডিলিট করুন এবং লগইন পেজে পাঠান
+            console.log("Signing out...");
+            deleteCookie('loggedInUser');
+            window.location.href = 'https://YrInspireIT.github.io/'; // আপনার লগইন পেজের নাম
+        }
+    </script>
+
+</body>
+</html>
